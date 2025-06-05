@@ -14,14 +14,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // 📝 Logging middleware
-app.use((req, res, next) => {
-    const timestamp = new Date().toISOString();
-    console.log(`📡 [${timestamp}] ${req.method} ${req.url}`);
-    if (Object.keys(req.body).length > 0) {
-        console.log('Body:', JSON.stringify(req.body, null, 2));
-    }
-    next();
-});
+// app.use((req, res, next) => {
+//     const timestamp = new Date().toISOString();
+//     console.log(`📡 [${timestamp}] ${req.method} ${req.url}`);
+//     if (Object.keys(req.body).length > 0) {
+//         console.log('Body:', JSON.stringify(req.body, null, 2));
+//     }
+//     next();
+// });
 
 // 🔄 Data mapping configuration based on objectCmd
 const COMMAND_MAPPING = {
@@ -80,25 +80,25 @@ async function sendSqsMessage(jsonData) {
         })
 }
 // 🏠 Health check endpoint
-app.get('/', (req, res) => {
-    console.log('✔️ Health check request received');
-    res.json({
-        status: 'healthy',
-        timestamp: new Date().toISOString(),
-        version: '1.0.0',
-        service: 'IoT Device Data Mapper',
-        endpoints: {
-            health: 'GET /',
-            receiveData: 'POST /getall'
-        },
-        commandMapping: {
-            '0': 'cancel',
-            '2': 'bill',
-            '3': 'call (waiter)',
-            '4': 'drinks'
-        }
-    });
-});
+// app.get('/', (req, res) => {
+//     console.log('✔️ Health check request received');
+//     res.json({
+//         status: 'healthy',
+//         timestamp: new Date().toISOString(),
+//         version: '1.0.0',
+//         service: 'IoT Device Data Mapper',
+//         endpoints: {
+//             health: 'GET /',
+//             receiveData: 'POST /getall'
+//         },
+//         commandMapping: {
+//             '0': 'cancel',
+//             '2': 'bill',
+//             '3': 'call (waiter)',
+//             '4': 'drinks'
+//         }
+//     });
+// });
 
 // 📥 Main endpoint to receive device data
 app.post('/getall', async (req, res) => {
